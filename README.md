@@ -16,19 +16,19 @@ My project aimed to achieve 3 main goals -
 
 #### Major PRs
 
-- [#21634](https://github.com/sympy/sympy/pull/21634)
-- [#21653](https://github.com/sympy/sympy/pull/21653)
-- [#21763](https://github.com/sympy/sympy/pull/21763)
-- [#21703](https://github.com/sympy/sympy/pull/21703)
+- [#21634](https://github.com/sympy/sympy/pull/21634) : Improve `TransferFunction` docs and add `to_expr`
+- [#21653](https://github.com/sympy/sympy/pull/21653) : [GSoC] Add `TransferFunctionMatrix` class
+- [#21763](https://github.com/sympy/sympy/pull/21763) : Add graphical analyses in `physics.control`
+- [#21703](https://github.com/sympy/sympy/pull/21703) : Implement `MIMOSeries` and `MIMOParallel`.
 
 #### Minor PRs
 
-- [#21820](https://github.com/sympy/sympy/pull/21820)
-- [#21587](https://github.com/sympy/sympy/pull/21587)
+- [#21820](https://github.com/sympy/sympy/pull/21820) : Update example in `MIMOParallel.var`
+- [#21587](https://github.com/sympy/sympy/pull/21587) : fix(physics.control): order of classes in doc
 
 <h2>Work in Progress</h2>
 
-
+- [#21833](https://github.com/sympy/sympy/pull/21833) : Implement `MIMOFeedback`
 
 <h2>Examples</h2>
 
