@@ -33,7 +33,80 @@ My project aimed to achieve 3 main goals -
 
 <h2>Examples</h2>
 
+In chronological order of addition to the codebase, these are some examples demonstrations of my work -
 
+- `TransferFunction` instances from sympy `Expr` (expression class) using `from_rational_expression()` classmethod.
+```py
+>>> from sympy.abc import s, p, a
+>>> from sympy.physics.control.lti import TransferFunction
+>>> expr1 = s/(s**2 + 2*s + 1)
+>>> tf1 = TransferFunction.from_rational_expression(expr1)
+>>> tf1
+TransferFunction(s, s**2 + 2*s + 1, s)
+>>> expr2 = (a*p**3 - a*p**2 + s*p)/(p + a**2)  # Expr with more than one variables
+>>> tf2 = TransferFunction.from_rational_expression(expr2, p)
+>>> tf2
+TransferFunction(a*p**3 - a*p**2 + p*s, a**2 + p, p)
+```
+
+- Get the equivalent rational expression by using the `to_expr()` method. This is helpful specially when the expression is to be manipulated rather than the `TransferFunction` object. It also works for `Series` and `Parallel` objects.
+```py
+>>> from sympy.abc import s, p, a, b
+>>> from sympy.physics.control.lti import TransferFunction
+>>> from sympy import Expr
+>>> tf1 = TransferFunction(s, a*s**2 + 1, s)
+>>> tf1.to_expr()
+s/(a*s**2 + 1)
+>>> isinstance(_, Expr)
+True
+>>> tf2 = TransferFunction(1, (p + 3*b)*(b - p), p)
+>>> tf2.to_expr()
+1/((b - p)*(3*b + p))
+>>> tf3 = TransferFunction((s - 2)*(s - 3), (s - 1)*(s - 2)*(s - 3), s)
+>>> tf3.to_expr()  # Makes sure that poles and zeros are not cancelled atomatically
+((s - 3)*(s - 2))/(((s - 3)*(s - 2)*(s - 1)))
+>>> _.simplify()  # Manipulate this expr however you like
+1/(s - 1)
+```
+
+- `TransferFunctionMatrix` class for representing MIMO tf systems.
+```py
+>>> from sympy.abc import s, p, a
+>>> from sympy import pprint
+>>> from sympy.physics.control.lti import TransferFunction, TransferFunctionMatrix, Series, Parallel
+>>> TransferFunction = TF; TransferFunctionMatrix = TFM
+>>> tf_1 = TF(s + a, s**2 + s + 1, s)
+>>> tf_2 = TF(p**4 - 3*p + 2, s + p, s)
+>>> tf_3 = TF(3, s + 2, s)
+>>> tf_4 = TF(-a + p, 9*s - 9, s)
+>>> tfm_1 = TFM([[tf_1], [tf_2], [tf_3]])
+>>> tfm_1
+TransferFunctionMatrix(((TransferFunction(a + s, s**2 + s + 1, s),), (TransferFunction(p**4 - 3*p + 2, p + s, s),), (TransferFunction(3, s + 2, s),)))
+>>> tfm_1.var
+s
+>>> tfm_1.num_inputs
+1
+>>> tfm_1.num_outputs
+3
+>>> tfm_1.shape
+(3, 1)
+>>> pprint(tfm_2, use_unicode=False)  # pretty-printing for better visualization
+[   a + s           -3       ]
+[ ----------       -----     ]
+[  2               s + 2     ]
+[ s  + s + 1                 ]
+[                            ]
+[ 4                          ]
+[p  - 3*p + 2      -a - s    ]
+[------------    ----------  ]
+[   p + s         2          ]
+[                s  + s + 1  ]
+[                            ]
+[                 4          ]
+[     3        - p  + 3*p - 2]
+[   -----      --------------]
+[   s + 2          p + s     ]{t}
+```
 
 <h2>Future Work</h2>
 
