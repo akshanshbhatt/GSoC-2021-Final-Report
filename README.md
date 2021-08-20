@@ -135,5 +135,3 @@ The control module still requires a lot of changes to become a powerful control 
 - Illustrating how a student can solve his textbook problems using this module by adding a few examples.
 
 <h2>Conclusion</h2>
-
-I had a great experience working for SymPy this summer
