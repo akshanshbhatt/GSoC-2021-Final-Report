@@ -1,4 +1,4 @@
-# GSoC 2021 Report - Improve and Expand Functionalities in Control Module
+# GSoC 2021 Report: Improve and Expand Functionalities in Control Module (Akshansh Bhatt)
 
 <p align="center">
 <img src=https://user-images.githubusercontent.com/53227127/130247629-81e83ef8-0d05-4f08-8edf-233abf8a1acb.png width=140 height=140></img>ㅤㅤㅤ<img src=https://user-images.githubusercontent.com/53227127/130246696-f7188bb7-3708-4b84-8f46-cc1119b6eb76.png></img>
@@ -22,7 +22,7 @@ My project aimed to achieve 3 main goals -
 
 - [#21634](https://github.com/sympy/sympy/pull/21634) : Improve `TransferFunction` docs and add `to_expr`
 - [#21653](https://github.com/sympy/sympy/pull/21653) : [GSoC] Add `TransferFunctionMatrix` class
-- [#19761](https://github.com/sympy/sympy/pull/19761) : [GSoC] Add `TransferFunctionMatrix class` in `physics.control`
+- [#19761](https://github.com/sympy/sympy/pull/19761) : [GSoC] Add `TransferFunctionMatrix` class in `physics.control`
 - [#21703](https://github.com/sympy/sympy/pull/21703) : Implement `MIMOSeries` and `MIMOParallel`
 - [#21763](https://github.com/sympy/sympy/pull/21763) : Add graphical analyses in `physics.control`
 - [#21833](https://github.com/sympy/sympy/pull/21833) : Implement `MIMOFeedback` class
@@ -132,5 +132,8 @@ The control module still requires a lot of changes to become a powerful control 
 - Introducing `StateSpace` model for effectively representing a State Space system symbolically. I have done some work on it, but it is not satisfactory enough to submit a patch.
 - Implementing `root_locus_plot(sys)` and `nyquist_plot(sys)`. I did complete the `root_locus_plot(sys)` during GSoC, but it couldn't get merged due to some performance issue. Those who are interested can refer to the first comment on the plots PR ([#21763](https://github.com/sympy/sympy/pull/21763)) for more details. Also, the `control_plots` module at present only supports SISO systems (`TransferFunction` and its configurations) so, extending the support for MIMO systems can also be a potential future scope. After adding `StateSpace` class, state space models should also be supported by this module.
 - Adding support for `TransferFunctionMatrix` objects to be instantiated by passing a list of numerators and a common denominator. This can be an alternative way of object creation.
+- Illustrating how a student can solve his textbook problems using this module by adding a few examples.
 
 <h2>Conclusion</h2>
+
+I had a great experience working for SymPy this summer
