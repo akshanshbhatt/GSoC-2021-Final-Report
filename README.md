@@ -1,5 +1,9 @@
 # GSoC 2021 Report - Improve and Expand Functionalities in Control Module
 
+<p align="center">
+<img src=https://user-images.githubusercontent.com/53227127/130247629-81e83ef8-0d05-4f08-8edf-233abf8a1acb.png width=140 height=140></img>ㅤㅤㅤ<img src=https://user-images.githubusercontent.com/53227127/130246696-f7188bb7-3708-4b84-8f46-cc1119b6eb76.png></img>
+</p>
+
 <h2>About Me</h2>
 
 I am [Akshansh Bhatt](https://www.github.com/akshanshbhatt), a 2nd-year undergraduate student pursuing a dual major in Physics and Electronics Engineering at [BITS Pilani](https://bits-pilani.ac.in/). I was part of the Google Summer of Code 2021 program as a student developer at [SymPy](https://github.com/sympy/sympy). You can find my project [here](https://summerofcode.withgoogle.com/projects/#6135134387961856). For information related to my weekly progress in the program, you can check out my [blog posts](https://gsoc-blog.akshansh.me/). I am available for discussions/feedback on this [email address](mailto:qaz.akshansh@gmail.com).
@@ -8,7 +12,7 @@ I am [Akshansh Bhatt](https://www.github.com/akshanshbhatt), a 2nd-year undergra
 
 My project aimed to achieve 3 main goals -
 
-- Complete the unfinished PR(s) and fix bugs from last year's work by [@namannimmo10](https://www.github.com/namannimmo10).
+- Complete the unfinished PR(s) and fix bugs from [last year's work](https://github.com/namannimmo10/Google-Summer-of-Code-with-SymPy) by [@namannimmo10](https://www.github.com/namannimmo10).
 - Make the control module's API more robust and beginner-friendly by adding examples related to use cases.
 - Add functionalities in the control module that were proposed last year, but work didn't start. This mainly included `StateSpace` class and common plots related to control theory.
 
@@ -122,6 +126,8 @@ Inputs = 2 | Outputs = 2
 
 <h2>Future Work</h2>
 
+The control module still requires a lot of changes to become a powerful control system toolkit like [MATLAB](https://www.mathworks.com/products/control.html). Some of which include -
 
+- 
 
 <h2>Conclusion</h2>
