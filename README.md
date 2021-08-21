@@ -135,3 +135,9 @@ The control module still requires a lot of changes to become a powerful control 
 - Illustrating how a student can solve his textbook problems using this module by adding a few examples.
 
 <h2>Conclusion</h2>
+
+I had an exceptional experience working for SymPy this summer! I want to thank SymPy for giving me a chance to work on such a big project and my mentors - [Naman Gera](https://github.com/namannimmo10) and [Jason Moore](https://github.com/moorepants), for guiding me in every way possible. Apart from my mentors, I would like to acknowledge other people involved in reviewing my code - [Oscar Benjamin](https://github.com/oscarbenjamin), [Ilhan Polat](https://github.com/ilayn), [Eric Wieser](https://github.com/eric-wieser), [Priit Laes](https://github.com/plaes), and [S.Y. Lee](https://github.com/sylee957). This project wouldn't have been achievable without the selfless participation of these people.
+
+I have improved my coding skills by getting exposed to Documentation and Test Driven Development. I got a gist of what it means to write actual 'Pythonic' code, structure any Python project, and find solutions to real-world problems that developers face. Apart from this, I have also developed my communication skills through async communication and weekly video calls with my mentors.
+
+I plan to contribute more to SymPy in the future and help new contributors to make their first step towards open source. I'll be glad to be a mentor in the next edition of GSoC.
