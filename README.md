@@ -124,6 +124,75 @@ Inputs = 2 | Outputs = 2
 [s + 1  1]{t}
 ```
 
+- Adding and Multiplying `TransferFunctionMatrix` objects return `MIMOSeries` and `MIMOParallel` objects respectively. These systems can be resolved further using `doit()`.
+```py
+>>> from sympy.abc import s
+>>> from sympy.physics.control.lti import TransferFunctionMatrix, TransferFunction
+>>> from sympy import pprint
+>>> g_11 = TransferFunction(5, s, s)
+>>> g_21 = TransferFunction(5, s*(s**2 + 2), s)
+>>> G_1 = TransferFunctionMatrix([[g_11], [g_21]])  # TFM
+>>> g_12 = TransferFunction(5, s, s)
+>>> G_2 = TransferFunctionMatrix([[g_11, g_12]])  # TFM
+>>> G = G_1*G_2
+>>> G
+MIMOSeries(TransferFunctionMatrix(((TransferFunction(5, s, s), TransferFunction(5, s, s)),)), TransferFunctionMatrix(((TransferFunction(5, s, s),), (TransferFunction(5, s*(s**2 + 2), s),))))
+>>> pprint(G, use_unicode=False)  # pretty-printed form
+[    5     ]             
+[    -     ]             
+[    s     ]             
+[          ]    [5  5]   
+[    5     ]   *[-  -]   
+[----------]    [s  s]{t}
+[  / 2    \]             
+[s*\s  + 2/]{t}          
+>>> G.doit()  # the equivalent MIMOSeries system
+TransferFunctionMatrix(((TransferFunction(25, s**2, s), TransferFunction(25, s**2, s)), (TransferFunction(25, s**2*(s**2 + 2), s), TransferFunction(25, s**2*(s**2 + 2), s))))
+>>> pprint(G.doit(), use_unicode=False)  # pretty-printed
+[    25           25     ]   
+[    --           --     ]   
+[     2            2     ]   
+[    s            s      ]   
+[                        ]   
+[     25           25    ]   
+[-----------  -----------]   
+[ 2 / 2    \   2 / 2    \]   
+[s *\s  + 2/  s *\s  + 2/]{t}
+>>> h_11 = TransferFunction(5, s, s)
+>>> h_12 = TransferFunction(5*s, s**2 + 2, s)
+>>> h_21 = TransferFunction(5, s*(s**2 + 2), s)
+>>> h_22 = TransferFunction(10, s, s)
+>>> H = TransferFunctionMatrix([[h_11, h_12], [h_21, h_22]])  # TFM
+>>> eq = G + H
+>>> eq
+MIMOParallel(MIMOSeries(TransferFunctionMatrix(((TransferFunction(5, s, s), TransferFunction(5, s, s)),)), TransferFunctionMatrix(((TransferFunction(5, s, s),), (TransferFunction(5, s*(s**2 + 2), s),)))), TransferFunctionMatrix(((TransferFunction(5, s, s), TransferFunction(5*s, s**2 + 2, s)), (TransferFunction(5, s*(s**2 + 2), s), TransferFunction(10, s, s)))))
+>>> pprint(eq, use_unicode=False)  # pretty-printed
+                            [    5        5*s  ]   
+[    5     ]                [    -       ------]   
+[    -     ]                [    s        2    ]   
+[    s     ]                [            s  + 2]   
+[          ]    [5  5]      [                  ]   
+[    5     ]   *[-  -]    + [    5         10  ]   
+[----------]    [s  s]{t}   [----------    --  ]   
+[  / 2    \]                [  / 2    \    s   ]   
+[s*\s  + 2/]{t}             [s*\s  + 2/        ]{t}
+>>> eq.doit()  # The equivalent TFM system computed
+TransferFunctionMatrix(((TransferFunction(5*(s**2 + 5*s), s**3, s), TransferFunction(5*s**3 + 25*s**2 + 50, s**2*(s**2 + 2), s)), (TransferFunction(5*(s**2*(s**2 + 2) + 5*s*(s**2 + 2)), s**3*(s**2 + 2)**2, s), TransferFunction(5*(2*s**2*(s**2 + 2) + 5*s), s**3*(s**2 + 2), s))))
+>>> pprint(_, use_unicode=False)  # pretty-printed
+[           / 2      \                 3       2        ]   
+[         5*\s  + 5*s/              5*s  + 25*s  + 50   ]   
+[         ------------              -----------------   ]   
+[               3                       2 / 2    \      ]   
+[              s                       s *\s  + 2/      ]   
+[                                                       ]   
+[  / 2 / 2    \       / 2    \\    /   2 / 2    \      \]   
+[5*\s *\s  + 2/ + 5*s*\s  + 2//  5*\2*s *\s  + 2/ + 5*s/]   
+[------------------------------  -----------------------]   
+[                    2                  3 / 2    \      ]   
+[          3 / 2    \                  s *\s  + 2/      ]   
+[         s *\s  + 2/                                   ]{t}
+```
+
 <h2>Future Work</h2>
 
 The control module still requires a lot of changes to become a powerful control system toolkit like [MATLAB](https://www.mathworks.com/products/control.html). Some of which include -
