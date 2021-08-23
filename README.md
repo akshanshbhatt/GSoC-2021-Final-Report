@@ -164,7 +164,7 @@ TransferFunctionMatrix(((TransferFunction(25, s**2, s), TransferFunction(25, s**
 >>> h_22 = TransferFunction(10, s, s)
 >>> H = TransferFunctionMatrix([[h_11, h_12], [h_21, h_22]])  # TFM
 >>> eq = G + H
->>> eq
+>>> eq  # Addition gives `MIMOParallel` object
 MIMOParallel(MIMOSeries(TransferFunctionMatrix(((TransferFunction(5, s, s), TransferFunction(5, s, s)),)), TransferFunctionMatrix(((TransferFunction(5, s, s),), (TransferFunction(5, s*(s**2 + 2), s),)))), TransferFunctionMatrix(((TransferFunction(5, s, s), TransferFunction(5*s, s**2 + 2, s)), (TransferFunction(5, s*(s**2 + 2), s), TransferFunction(10, s, s)))))
 >>> pprint(eq, use_unicode=False)  # pretty-printed
                             [    5        5*s  ]   
@@ -191,6 +191,76 @@ TransferFunctionMatrix(((TransferFunction(5*(s**2 + 5*s), s**3, s), TransferFunc
 [                    2                  3 / 2    \      ]   
 [          3 / 2    \                  s *\s  + 2/      ]   
 [         s *\s  + 2/                                   ]{t}
+```
+
+- Users can also compute closed-loop Feedback for SISO and MIMO systems (both positive and negative).
+```py
+>>> from sympy.abc import s
+>>> from sympy.physics.control.lti import TransferFunction, Feedback, TransferFunctionMatrix, MIMOFeedback
+>>> # SISO Feedback Systems
+>>> # ---------------------
+>>> plant = TransferFunction(3*s**2 + 7*s - 3, s**2 - 4*s + 2, s)
+>>> controller = TransferFunction(5*s - 10, s + 7, s)
+>>> F1 = Feedback(plant, controller)  # By default negative sign is considered
+>>> F1
+Feedback(TransferFunction(3*s**2 + 7*s - 3, s**2 - 4*s + 2, s), TransferFunction(5*s - 10, s + 7, s), -1)
+>>> pprint(F1, use_unicode=False)  # This is how pretty-printed Feedback object looks like
+        /   2          \       
+        |3*s  + 7*s - 3|       
+        |--------------|       
+        |  2           |       
+        \ s  - 4*s + 2 /       
+-------------------------------
+    /   2          \           
+1   |3*s  + 7*s - 3| /5*s - 10\
+- + |--------------|*|--------|
+1   |  2           | \ s + 7  /
+    \ s  - 4*s + 2 /           
+>>> F2 = Feedback(plant, controller, sign=1)  # Positive Feedback
+>>> F2
+Feedback(TransferFunction(3*s**2 + 7*s - 3, s**2 - 4*s + 2, s), TransferFunction(5*s - 10, s + 7, s), 1)
+>>> pprint(F2, use_unicode=False)
+        /   2          \       
+        |3*s  + 7*s - 3|       
+        |--------------|       
+        |  2           |       
+        \ s  - 4*s + 2 /       
+-------------------------------
+    /   2          \           
+1   |3*s  + 7*s - 3| /5*s - 10\
+- - |--------------|*|--------|
+1   |  2           | \ s + 7  /
+    \ s  - 4*s + 2 /           
+>>> F1.doit()  # doit() gives the resultant TransferFunction
+TransferFunction((s + 7)*(s**2 - 4*s + 2)*(3*s**2 + 7*s - 3), ((s + 7)*(s**2 - 4*s + 2) + (5*s - 10)*(3*s**2 + 7*s - 3))*(s**2 - 4*s + 2), s)
+>>> F1.doit(cancel=True, expand=True)  # cancel, expand are optional arguments
+TransferFunction(3*s**3 + 28*s**2 + 46*s - 21, 16*s**3 + 8*s**2 - 111*s + 44, s)
+>>> # MIMO Feedback Systems
+>>> # ---------------------
+>>> tf1 = TransferFunction(s, 1 - s, s)
+>>> tf2 = TransferFunction(1, s, s)
+>>> tf3 = TransferFunction(5, 1, s)
+>>> tf4 = TransferFunction(s - 1, s, s)
+>>> tf5 = TransferFunction(0, 1, s)
+>>> sys1 = TransferFunctionMatrix([[tf1, tf2], [tf3, tf4]])
+>>> sys2 = TransferFunctionMatrix([[tf3, tf5], [tf5, tf5]])
+>>> F_1 = MIMOFeedback(sys1, sys2, 1)  # Positive Feedback
+>>> pprint(F_1, use_unicode=False)
+/    [  s      1  ]    [5  0]   \-1   [  s      1  ]
+|    [-----    -  ]    [-  -]   |     [-----    -  ]
+|    [1 - s    s  ]    [1  1]   |     [1 - s    s  ]
+|I - [            ]   *[    ]   |   * [            ]
+|    [  5    s - 1]    [0  0]   |     [  5    s - 1]
+|    [  -    -----]    [-  -]   |     [  -    -----]
+\    [  1      s  ]{t} [1  1]{t}/     [  1      s  ]{t}
+>>> pprint(F_1.doit(), use_unicode=False)  # Returns the eqivalent MIMO-TF system
+[               -s                         1 - s       ]
+[             -------                   -----------    ]
+[             6*s - 1                   s*(1 - 6*s)    ]
+[                                                      ]
+[25*s*(s - 1) + 5*(1 - s)*(6*s - 1)  (s - 1)*(6*s + 24)]
+[----------------------------------  ------------------]
+[        (1 - s)*(6*s - 1)              s*(6*s - 1)    ]{t}
 ```
 
 <h2>Future Work</h2>
