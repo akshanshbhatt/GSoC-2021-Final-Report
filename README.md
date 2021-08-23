@@ -273,25 +273,25 @@ TransferFunction(3*s**3 + 28*s**2 + 46*s - 21, 16*s**3 + 8*s**2 - 111*s + 44, s)
 ```
 ![image](https://user-images.githubusercontent.com/53227127/130432074-b08a005c-b555-4b6e-91bd-4068a259d3b8.png)
 
-```
+```py
 >>> tf2 = TransferFunction(8*s**2 + 18*s + 32, s**3 + 6*s**2 + 14*s + 24, s)
 >>> step_response_plot(tf2)  # Step-Response Plot of a system
 ```
 ![image](https://user-images.githubusercontent.com/53227127/130432198-45e82654-6977-4ac6-869b-4cc2bea1da4a.png)
 
-```
+```py
 >>> tf3 = TransferFunction(8*s**2 + 18*s + 32, s**3 + 6*s**2 + 14*s + 24, s)
 >>> impulse_response_plot(tf3)  # Impulse-Response Plot of a system
 ```
 ![image](https://user-images.githubusercontent.com/53227127/130432239-1dba2509-07fb-401a-a87f-2458b56d2666.png)
 
-```
+```py
 >>> tf4 = TransferFunction(s, (s+4)*(s+8), s)  # Ramp Response Plot of a system
 >>> ramp_response_plot(tf4, upper_limit=2)
 ```
 ![image](https://user-images.githubusercontent.com/53227127/130432292-b690d9dd-aab3-4eb8-95d2-baf8c8fa490c.png)
 
-```
+```py
 >>> tf5 = TransferFunction(1*s**2 + 0.1*s + 7.5, 1*s**4 + 0.12*s**3 + 9*s**2, s)
 >>> bode_plot(tf5, initial_exp=0.2, final_exp=0.7)  # Bode Plot of the system
 ```
