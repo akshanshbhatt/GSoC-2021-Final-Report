@@ -297,6 +297,8 @@ TransferFunction(3*s**3 + 28*s**2 + 46*s - 21, 16*s**3 + 8*s**2 - 111*s + 44, s)
 ```
 ![image](https://user-images.githubusercontent.com/53227127/130432352-8112c55c-2d24-4f3d-a2e3-5039f91e8f75.png)
 
+All these plots are highly customizable and also offer numeric options to the users for analysis or other plotting modules/backends.
+
 <h2>Future Work</h2>
 
 The control module still requires a lot of changes to become a powerful control system toolkit like [MATLAB](https://www.mathworks.com/products/control.html). Some of which include -
