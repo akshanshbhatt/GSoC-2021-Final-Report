@@ -263,6 +263,23 @@ TransferFunction(3*s**3 + 28*s**2 + 46*s - 21, 16*s**3 + 8*s**2 - 111*s + 44, s)
 [        (1 - s)*(6*s - 1)              s*(6*s - 1)    ]{t}
 ```
 
+- Some basic plots related to control theory. These functions work for any SISO system.
+```py
+>>> from sympy.abc import s
+>>> from sympy.physics.control.lti import TransferFunction
+>>> from sympy.physics.control.control_plots import *
+>>> tf1 = TransferFunction(s**2 + 1, s**4 + 4*s**3 + 6*s**2 + 5*s + 2, s)
+>>> pole_zero_plot(tf1)  # PZ plot
+>>> tf2 = TransferFunction(8*s**2 + 18*s + 32, s**3 + 6*s**2 + 14*s + 24, s)
+>>> step_response_plot(tf2)  # Step-Response Plot of a system
+>>> tf3 = TransferFunction(8*s**2 + 18*s + 32, s**3 + 6*s**2 + 14*s + 24, s)
+>>> impulse_response_plot(tf3)  # Impulse-Response Plot of a system
+>>> tf4 = TransferFunction(s, (s+4)*(s+8), s)  # Ramp Response Plot of a system
+>>> ramp_response_plot(tf4, upper_limit=2)
+>>> tf5 = TransferFunction(1*s**2 + 0.1*s + 7.5, 1*s**4 + 0.12*s**3 + 9*s**2, s)
+>>> bode_plot(tf5, initial_exp=0.2, final_exp=0.7)  # Bode Plot of the system
+```
+
 <h2>Future Work</h2>
 
 The control module still requires a lot of changes to become a powerful control system toolkit like [MATLAB](https://www.mathworks.com/products/control.html). Some of which include -
